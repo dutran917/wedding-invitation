@@ -26,6 +26,9 @@ yarn-error.log*
 # Local env files
 .env*.local
 
+# Local RSVP data
+/data/rsvps.json
+
 # Vercel
 .vercel
 

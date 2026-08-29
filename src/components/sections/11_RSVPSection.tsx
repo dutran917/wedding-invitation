@@ -42,7 +42,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config, guestName }) =
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name.trim()) {
@@ -52,31 +52,19 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config, guestName }) =
 
     setIsSubmitting(true);
 
-    // Simulate RSVP submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const result = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const payload = await result.json();
+      if (!result.ok) throw new Error(payload.error || "Không thể gửi phản hồi");
+
       setIsSubmitted(true);
 
       if (formData.wishes.trim()) {
         saveGuestWish(formData.name, formData.wishes);
-      }
-
-      try {
-        const savedResponses = JSON.parse(
-          window.localStorage.getItem("wedding-rsvp-responses") || "[]"
-        );
-        window.localStorage.setItem(
-          "wedding-rsvp-responses",
-          JSON.stringify([
-            { ...formData, submittedAt: new Date().toISOString() },
-            ...savedResponses,
-          ].slice(0, 30))
-        );
-      } catch {
-        window.localStorage.setItem(
-          "wedding-rsvp-responses",
-          JSON.stringify([{ ...formData, submittedAt: new Date().toISOString() }])
-        );
       }
 
       if (formData.attending === "yes") {
@@ -89,7 +77,14 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config, guestName }) =
       }
 
       showToast("Cảm ơn bạn đã gửi phản hồi tham dự!", "success");
-    }, 600);
+    } catch (error) {
+      showToast(
+        error instanceof Error ? error.message : "Không thể gửi phản hồi. Vui lòng thử lại.",
+        "info"
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
