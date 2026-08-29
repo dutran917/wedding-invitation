@@ -28,7 +28,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ config }) => {
   };
 
   return (
-    <section className="relative w-full py-16 px-5 sm:px-8 bg-ivory-50 text-espresso-400">
+    <section className="relative w-full py-12 px-5 sm:px-8 bg-ivory-50 text-espresso-400">
       <div className="text-center mb-10">
         <span className="font-sans text-[11px] sm:text-xs tracking-ultra text-gold-600 uppercase font-medium">
           GỬI QUÀ CHÚC PHÚC

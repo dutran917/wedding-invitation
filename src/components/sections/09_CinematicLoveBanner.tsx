@@ -11,7 +11,7 @@ interface CinematicLoveBannerProps {
 
 export const CinematicLoveBanner: React.FC<CinematicLoveBannerProps> = ({ config }) => {
   return (
-    <section className="relative w-full h-[520px] sm:h-[580px] overflow-hidden flex items-end justify-start select-none">
+    <section className="relative w-full h-[460px] sm:h-[520px] overflow-hidden flex items-end justify-start select-none">
       {/* Cinematic Full Bleed Couple Photo */}
       <div className="absolute inset-0 w-full h-full">
         <Image

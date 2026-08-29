@@ -9,8 +9,10 @@ export const viewport: Viewport = {
   themeColor: "#FAF7F2",
 };
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wedding.example.com"),
+  metadataBase: new URL(siteUrl),
   title: "Quốc Du & Phương Ly — Wedding Invitation",
   description: "Trân trọng kính mời quý khách tới dự lễ thành hôn của Quốc Du & Phương Ly vào lúc 17:00 ngày 28.11.2026 tại Thiên Trang Palace Cẩm Phả, Quảng Ninh",
   openGraph: {

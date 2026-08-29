@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
 import { MapPin, Navigation, Calendar, Clock } from "lucide-react";
+import { downloadWeddingCalendar } from "@/lib/calendar";
 
 interface VenueSectionProps {
   config: WeddingConfig;
@@ -14,7 +15,7 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
   const { venue, weddingDate, weddingTime } = config;
 
   return (
-    <section className="relative w-full py-16 px-4 sm:px-6 bg-[#F4EFE6] text-espresso-400">
+    <section className="relative w-full py-12 px-4 sm:px-6 bg-[#F4EFE6] text-espresso-400">
       <div className="text-center mb-8 max-w-[380px] mx-auto">
         <span className="font-sans text-[10px] tracking-ultra text-gold-600 uppercase font-semibold">
           ĐỊA ĐIỂM TỔ CHỨC
@@ -42,7 +43,7 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70" />
           <div className="absolute bottom-2.5 left-3 right-3 text-left">
-            <span className="font-sans text-[9px] tracking-widest text-gold-300 uppercase font-semibold">
+            <span className="font-sans text-[10px] tracking-widest text-gold-200 uppercase font-semibold">
               TRUNG TÂM TIỆC CƯỚI & SỰ KIỆN
             </span>
             <h4 className="font-serif text-base sm:text-lg text-white font-medium">
@@ -77,6 +78,14 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
           <Navigation className="w-3.5 h-3.5 text-gold-400 fill-gold-400" />
           <span>Mở Bản Đồ Chỉ Đường</span>
         </a>
+        <button
+          type="button"
+          onClick={() => downloadWeddingCalendar(config)}
+          className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xs border border-gold-500/50 bg-ivory-50 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-widest text-espresso-500 transition-all duration-300 hover:bg-cream-100 active:scale-[0.98]"
+        >
+          <Calendar className="h-3.5 w-3.5 text-gold-600" />
+          <span>Lưu ngày cưới vào lịch</span>
+        </button>
       </motion.div>
     </section>
   );

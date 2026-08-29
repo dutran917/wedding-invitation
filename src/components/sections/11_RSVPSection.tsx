@@ -1,18 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
 import { BotanicalDivider } from "@/components/ui/BotanicalOrnament";
 import { useToast } from "@/components/layout/Toast";
 import confetti from "canvas-confetti";
 import { CheckCircle2, HeartHandshake, Send } from "lucide-react";
+import { saveGuestWish } from "@/lib/guestbook";
 
 interface RSVPSectionProps {
   config: WeddingConfig;
+  guestName?: string;
 }
 
-export const RSVPSection: React.FC<RSVPSectionProps> = ({ config }) => {
+export const RSVPSection: React.FC<RSVPSectionProps> = ({ config, guestName }) => {
   const { showToast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -26,6 +28,12 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config }) => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (guestName) {
+      setFormData((current) => ({ ...current, name: current.name || guestName }));
+    }
+  }, [guestName]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -49,6 +57,28 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config }) => {
       setIsSubmitting(false);
       setIsSubmitted(true);
 
+      if (formData.wishes.trim()) {
+        saveGuestWish(formData.name, formData.wishes);
+      }
+
+      try {
+        const savedResponses = JSON.parse(
+          window.localStorage.getItem("wedding-rsvp-responses") || "[]"
+        );
+        window.localStorage.setItem(
+          "wedding-rsvp-responses",
+          JSON.stringify([
+            { ...formData, submittedAt: new Date().toISOString() },
+            ...savedResponses,
+          ].slice(0, 30))
+        );
+      } catch {
+        window.localStorage.setItem(
+          "wedding-rsvp-responses",
+          JSON.stringify([{ ...formData, submittedAt: new Date().toISOString() }])
+        );
+      }
+
       if (formData.attending === "yes") {
         confetti({
           particleCount: 70,
@@ -63,7 +93,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config }) => {
   };
 
   return (
-    <section className="relative w-full py-16 px-5 sm:px-8 bg-cream-50/70 text-espresso-400">
+    <section className="relative w-full py-12 px-5 sm:px-8 bg-cream-50/70 text-espresso-400">
       <div className="text-center mb-10">
         <span className="font-sans text-[11px] sm:text-xs tracking-ultra text-gold-600 uppercase font-medium">
           XÁC NHẬN THAM DỰ
@@ -72,7 +102,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config }) => {
           R.S.V.P
         </h2>
         <BotanicalDivider variant="minimal" />
-        <p className="font-serif italic text-xs sm:text-sm text-espresso-300 max-w-xs mx-auto mt-2">
+        <p className="font-serif italic text-sm text-espresso-300 max-w-xs mx-auto mt-2 leading-relaxed">
           Để chuẩn bị chu đáo nhất, xin vui lòng gửi phản hồi cho gia đình trước ngày cưới
         </p>
       </div>

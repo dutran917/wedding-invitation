@@ -83,7 +83,7 @@ export const JustMarriedSection: React.FC<JustMarriedSectionProps> = ({ config }
           <p className="font-serif italic text-xs text-espresso-300 mt-3">
             Thank you for being a part of our story
           </p>
-          <span className="font-sans text-[9px] tracking-widest text-espresso-200 uppercase mt-1">
+          <span className="font-sans text-[10px] tracking-widest text-espresso-300 uppercase mt-1">
             28 . 11 . 2026
           </span>
         </div>

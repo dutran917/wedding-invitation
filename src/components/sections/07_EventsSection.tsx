@@ -30,7 +30,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({ config }) => {
   };
 
   return (
-    <section className="relative w-full py-16 px-4 sm:px-6 bg-[#FAF7F2] text-espresso-400 overflow-hidden">
+    <section className="relative w-full py-12 px-4 sm:px-6 bg-[#FAF7F2] text-espresso-400 overflow-hidden">
       {/* Top Banner Photo Frame */}
       <div className="max-w-[380px] mx-auto text-center mb-8">
         <motion.div
@@ -88,7 +88,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({ config }) => {
                 {evt.title}
               </h3>
               {evt.description && (
-                <p className="font-sans text-[10.5px] text-espresso-300 font-light mt-0.5 leading-snug">
+                <p className="font-sans text-[11px] text-espresso-300 font-normal mt-0.5 leading-snug">
                   {evt.description}
                 </p>
               )}

@@ -4,13 +4,20 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
-import { MapPin, Navigation } from "lucide-react";
+import { CalendarPlus, Navigation } from "lucide-react";
+import { downloadWeddingCalendar } from "@/lib/calendar";
 
 interface CalendarInvitationProps {
   config: WeddingConfig;
+  guestName?: string;
+  salutation?: string;
 }
 
-export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({ config }) => {
+export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({
+  config,
+  guestName,
+  salutation,
+}) => {
   const { groom, bride, weddingDate, weddingTime, lunarDate, venue } = config;
 
   const dateObj = new Date(weddingDate);
@@ -115,6 +122,20 @@ export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({ c
           transition={{ duration: 0.8 }}
           className="space-y-4"
         >
+          {guestName && (
+            <div className="mx-auto mb-6 max-w-xs border-y border-gold-300/35 py-4">
+              <p className="font-sans text-[11px] font-medium uppercase tracking-[0.28em] text-gold-700">
+                Trân trọng kính mời
+              </p>
+              <p className="mt-2 font-script text-4xl leading-tight text-espresso-500">
+                {salutation ? `${salutation} ` : ""}{guestName}
+              </p>
+              <p className="mt-1 font-serif text-sm italic text-espresso-300">
+                đến chung vui trong ngày hạnh phúc của chúng tôi
+              </p>
+            </div>
+          )}
+
           <div className="space-y-1">
             <h2 className="font-script text-4xl sm:text-5xl text-espresso-500 leading-tight">
               {groom.name}
@@ -126,7 +147,7 @@ export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({ c
           </div>
 
           <div className="pt-2">
-            <p className="font-sans text-[10px] tracking-widest text-espresso-300 uppercase font-medium">
+            <p className="font-sans text-[11px] tracking-widest text-espresso-300 uppercase font-semibold leading-relaxed">
               LỄ THÀNH HÔN CỦA CHÚNG TÔI ĐƯỢC TỔ CHỨC VÀO NGÀY
             </p>
             <div className="flex items-center justify-center gap-3 my-2 text-2xl sm:text-3xl font-serif text-espresso-500">
@@ -152,23 +173,33 @@ export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({ c
               TẠI {venue.name}
             </p>
             {venue.subVenue && (
-              <p className="font-sans text-[10px] tracking-wider text-gold-600 uppercase mt-0.5">
+              <p className="font-sans text-[11px] tracking-wider text-gold-700 uppercase mt-0.5">
                 {venue.subVenue}
               </p>
             )}
-            <p className="font-serif text-xs text-espresso-300 italic mt-0.5">
+            <p className="font-serif text-sm text-espresso-300 italic mt-1 leading-relaxed">
               {venue.address}
             </p>
 
-            <a
-              href={venue.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 mt-4 py-2 px-5 rounded-full border border-gold-500/60 bg-cream-50/80 hover:bg-gold-500 hover:text-white text-espresso-400 font-sans text-[11px] tracking-widest uppercase font-medium shadow-xs transition-all duration-300 active:scale-95"
-            >
-              <Navigation className="w-3 h-3 text-gold-600 fill-gold-600" />
-              <span>CHỈ ĐƯỜNG</span>
-            </a>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <a
+                href={venue.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-gold-500/60 bg-cream-50/80 px-4 py-2.5 font-sans text-[11px] font-medium uppercase tracking-widest text-espresso-400 shadow-xs transition-all duration-300 hover:bg-gold-500 hover:text-white active:scale-95"
+              >
+                <Navigation className="h-3 w-3 fill-gold-600 text-gold-600" />
+                <span>Chỉ đường</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => downloadWeddingCalendar(config)}
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border border-gold-500/60 bg-cream-50/80 px-4 py-2.5 font-sans text-[11px] font-medium uppercase tracking-widest text-espresso-400 shadow-xs transition-all duration-300 hover:bg-gold-500 hover:text-white active:scale-95"
+              >
+                <CalendarPlus className="h-3.5 w-3.5 text-gold-600" />
+                <span>Lưu lịch</span>
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>

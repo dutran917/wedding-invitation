@@ -30,7 +30,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ config }) => {
   };
 
   return (
-    <section className="relative w-full py-16 px-4 bg-[#FAF7F2] text-espresso-400">
+    <section className="relative w-full py-12 px-4 bg-[#FAF7F2] text-espresso-400">
       {/* Title */}
       <div className="text-center mb-8">
         <span className="font-sans text-[10px] tracking-ultra text-gold-600 uppercase font-semibold">
@@ -144,66 +144,17 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ config }) => {
           </motion.div>
         )}
 
-        {/* Photo 5 & 6: Polaroid Frames */}
-        {gallery[4] && gallery[5] && (
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <motion.div
-              initial={{ opacity: 0, rotate: -2 }}
-              whileInView={{ opacity: 1, rotate: -1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              onClick={() => openLightbox(4)}
-              className="cursor-pointer bg-white p-2 pb-3 shadow-paper border border-gold-300/40 rounded-xs transform hover:rotate-0 transition-transform duration-300"
-            >
-              <div className="relative w-full aspect-square overflow-hidden bg-cream-100">
-                <Image
-                  src={gallery[4].src}
-                  alt={gallery[4].alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 50vw, 200px"
-                />
-              </div>
-              <p className="font-script text-base text-gold-600 text-center mt-2 truncate">
-                Forever
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, rotate: 2 }}
-              whileInView={{ opacity: 1, rotate: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              onClick={() => openLightbox(5)}
-              className="cursor-pointer bg-white p-2 pb-3 shadow-paper border border-gold-300/40 rounded-xs transform hover:rotate-0 transition-transform duration-300"
-            >
-              <div className="relative w-full aspect-square overflow-hidden bg-cream-100">
-                <Image
-                  src={gallery[5].src}
-                  alt={gallery[5].alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 50vw, 200px"
-                />
-              </div>
-              <p className="font-script text-base text-gold-600 text-center mt-2 truncate">
-                Sunshine
-              </p>
-            </motion.div>
-          </div>
-        )}
-
-        {/* Horizontal Mini Thumbnail Strip (Like Reference!) */}
+        {/* Horizontal thumbnail strip keeps every photo accessible without lengthening the page. */}
         <div className="pt-4 border-t border-gold-300/30">
-          <p className="font-sans text-[9px] tracking-widest uppercase text-espresso-300 text-center mb-2.5 font-medium">
-            Bấm vào ảnh thu nhỏ để xem toàn bộ
+          <p className="font-sans text-[10px] tracking-widest uppercase text-espresso-300 text-center mb-2.5 font-semibold">
+            Chạm vào ảnh để xem toàn bộ album
           </p>
-          <div className="grid grid-cols-6 gap-1.5">
-            {gallery.slice(0, 6).map((item, idx) => (
+          <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {gallery.map((item, idx) => (
               <div
                 key={item.id}
                 onClick={() => openLightbox(idx)}
-                className="relative aspect-square cursor-pointer rounded-2xs overflow-hidden border border-gold-300/50 hover:border-gold-600 hover:scale-105 transition-all"
+                className="relative aspect-square w-14 flex-none cursor-pointer rounded-2xs overflow-hidden border border-gold-300/50 hover:border-gold-600 hover:scale-105 transition-all"
               >
                 <Image
                   src={item.src}

@@ -8,6 +8,7 @@ interface MusicPlayerProps {
   title?: string;
   artist?: string;
   autoPlay?: boolean;
+  visible?: boolean;
 }
 
 export const MusicPlayer: React.FC<MusicPlayerProps> = ({
@@ -15,6 +16,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   title = "Wedding Melody",
   artist = "Orchestra",
   autoPlay = true,
+  visible = true,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -39,6 +41,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           // Blocked by browser autoplay restrictions until interaction
         });
     };
+
+    const handleInvitationOpen = () => {
+      userPausedRef.current = false;
+      playAudio();
+    };
+
+    window.addEventListener("wedding:open-invitation", handleInvitationOpen);
 
     if (autoPlay) {
       // 1. Try immediate playback
@@ -66,8 +75,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
 
       return () => {
         removeListeners();
+        window.removeEventListener("wedding:open-invitation", handleInvitationOpen);
       };
     }
+
+    return () => {
+      window.removeEventListener("wedding:open-invitation", handleInvitationOpen);
+    };
   }, [autoPlay]);
 
   const togglePlay = (e: React.MouseEvent) => {
@@ -93,12 +107,16 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   };
 
   return (
-    <div className="fixed top-5 right-5 z-40">
+    <div
+      className={`fixed top-4 right-4 z-40 transition-all duration-500 md:left-1/2 md:right-auto md:ml-[142px] ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"
+      }`}
+    >
       <audio
         ref={audioRef}
         src={src}
         loop
-        preload="auto"
+        preload="metadata"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       />

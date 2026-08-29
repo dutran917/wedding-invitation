@@ -2,15 +2,87 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { WeddingConfig } from "@/types/wedding";
 
 interface HeroSectionProps {
   config: WeddingConfig;
+  isRevealed?: boolean;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ config }) => {
+interface SpiralNameProps {
+  text: string;
+  isRevealed: boolean;
+  delay: number;
+}
+
+const SpiralName: React.FC<SpiralNameProps> = ({ text, isRevealed, delay }) => {
+  const reduceMotion = useReducedMotion();
+  const characters = Array.from(text);
+
+  return (
+    <motion.h1
+      aria-label={text}
+      className="font-script text-6xl sm:text-7xl text-ivory-50 drop-shadow-[0_4px_18px_rgba(0,0,0,0.9)] leading-[0.92] whitespace-nowrap [perspective:900px]"
+    >
+      {characters.map((character, index) => {
+        const angle = (index / Math.max(characters.length, 1)) * Math.PI * 2 - Math.PI / 2;
+        const radius = 115 + (index % 3) * 22;
+        const startX = Math.round(Math.cos(angle) * radius);
+        const startY = Math.round(Math.sin(angle) * 82 + (index % 2 === 0 ? -28 : 28));
+        const rotation = (index % 2 === 0 ? -1 : 1) * (150 + index * 24);
+
+        return (
+          <motion.span
+            key={`${character}-${index}`}
+            aria-hidden="true"
+            initial={false}
+            animate={
+              isRevealed || reduceMotion
+                ? {
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    rotate: 0,
+                    rotateX: 0,
+                    rotateY: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                  }
+                : {
+                    opacity: 0,
+                    x: startX,
+                    y: startY,
+                    rotate: rotation,
+                    rotateX: 75,
+                    rotateY: index % 2 === 0 ? -55 : 55,
+                    scale: 0.25,
+                    filter: "blur(9px)",
+                  }
+            }
+            transition={
+              reduceMotion
+                ? { duration: 0.01 }
+                : {
+                    type: "spring",
+                    stiffness: 76,
+                    damping: 13,
+                    mass: 0.72,
+                    delay: delay + index * 0.085,
+                  }
+            }
+            className="inline-block [transform-style:preserve-3d]"
+          >
+            {character === " " ? "\u00A0" : character}
+          </motion.span>
+        );
+      })}
+    </motion.h1>
+  );
+};
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = true }) => {
   const { groom, bride, weddingDate, saveTheDateText } = config;
 
   const formattedDate = weddingDate
@@ -68,56 +140,56 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config }) => {
         </div>
       </motion.div>
 
-      {/* Middle Dramatic Typography: Bold Artistic Interplay */}
+      {/* Middle calligraphy follows the original template, with a 3D spiral entrance. */}
       <div className="relative z-20 px-4 my-auto flex flex-col items-center w-full">
         {/* Calligraphy Intro */}
         <motion.span
           initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.4 }}
-          className="font-script text-3xl sm:text-4xl text-gold-300 drop-shadow-md mb-1"
+          animate={isRevealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 0.8, delay: 0.42 }}
+          className="font-serif italic text-base sm:text-lg tracking-[0.16em] text-gold-200 drop-shadow-md mb-4"
         >
           The Wedding of
         </motion.span>
 
-        {/* Big Bold Artistic Names */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
-          className="flex flex-col items-center w-full"
-        >
-          {/* Groom: High-Fashion Serif Bold */}
-          <div className="relative">
-            <h1 className="font-serif text-5xl sm:text-6xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-white via-ivory-100 to-gold-200 drop-shadow-[0_4px_15px_rgba(0,0,0,0.8)] uppercase">
-              {groom.name}
-            </h1>
-          </div>
+        <div className="relative flex w-full flex-col items-center">
+          <motion.div
+            aria-hidden="true"
+            initial={false}
+            animate={
+              isRevealed
+                ? { opacity: [0, 0.55, 0], scale: [0.45, 1.05, 1.3], rotate: 210 }
+                : { opacity: 0, scale: 0.45, rotate: 0 }
+            }
+            transition={{ duration: 1.8, delay: 0.52, ease: "easeOut" }}
+            className="pointer-events-none absolute left-1/2 top-1/2 -ml-36 -mt-[88px] h-44 w-72 rounded-[50%] border border-gold-300/35"
+          />
 
-          {/* Flourish Ampersand */}
-          <div className="relative -my-3 sm:-my-4 flex items-center justify-center">
+          <SpiralName text={groom.name} isRevealed={isRevealed} delay={0.56} />
+
+          <div className="relative -my-2 flex items-center justify-center">
             <motion.span
-              animate={{ rotate: [0, 3, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="font-script text-6xl sm:text-7xl text-gold-400 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] select-none z-10"
+              initial={false}
+              animate={
+                isRevealed
+                  ? { opacity: 1, scale: 1, rotate: 0 }
+                  : { opacity: 0, scale: 0.2, rotate: -240 }
+              }
+              transition={{ type: "spring", stiffness: 90, damping: 12, delay: 1.1 }}
+              className="font-script text-5xl sm:text-6xl text-gold-300 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] select-none z-10"
             >
               &
             </motion.span>
           </div>
 
-          {/* Bride: High-Fashion Serif Italic / Bold Contrast */}
-          <div className="relative">
-            <h1 className="font-serif italic text-5xl sm:text-6xl font-normal tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white via-ivory-100 to-gold-200 drop-shadow-[0_4px_15px_rgba(0,0,0,0.8)] uppercase">
-              {bride.name}
-            </h1>
-          </div>
-        </motion.div>
+          <SpiralName text={bride.name} isRevealed={isRevealed} delay={1.14} />
+        </div>
 
         {/* Date Display Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9 }}
+          animate={isRevealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.9, delay: 2.05 }}
           className="mt-6 flex items-center justify-center gap-3 bg-black/40 backdrop-blur-md px-5 py-2 rounded-full border border-gold-400/40 shadow-lg"
         >
           <div className="h-[1px] w-6 bg-gold-400/70" />
@@ -135,7 +207,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config }) => {
         transition={{ duration: 1, delay: 1.3 }}
         className="relative z-20 pb-8 flex flex-col items-center cursor-pointer"
       >
-        <span className="font-sans text-[9px] tracking-ultra text-ivory-200/80 uppercase mb-1 drop-shadow-sm">
+        <span className="font-sans text-[10px] tracking-[0.28em] text-ivory-100/90 uppercase mb-1 drop-shadow-sm">
           Chạm hoặc kéo xuống để mở thiệp
         </span>
         <motion.div

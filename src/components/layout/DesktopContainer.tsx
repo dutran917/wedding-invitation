@@ -17,6 +17,7 @@ export const DesktopContainer: React.FC<DesktopContainerProps> = ({ children }) 
           alt="Ambient Wedding Background"
           fill
           className="object-cover blur-3xl scale-125"
+          sizes="100vw"
           priority
         />
         <div className="absolute inset-0 bg-[#181513]/70" />
