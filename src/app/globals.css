@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-ivory: #FAF7F2;
+    --bg-cream: #F4EFE6;
+    --gold-primary: #C2A676;
+    --gold-dark: #8E7240;
+    --text-charcoal: #2C2520;
+    --text-muted: #6B5F54;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #1a1715;
+  }
+
+  body {
+    color: var(--text-charcoal);
+    background-color: var(--bg-ivory);
+    overflow-x: hidden;
+    user-select: text;
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F4EFE6;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C2A676;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8E7240;
+  }
+}
+
+/* Texture & Luxury Helpers */
+.paper-texture {
+  background-image: radial-gradient(rgba(194, 166, 118, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #9C7A3C 0%, #C8AE7D 40%, #E8D8B6 55%, #A68547 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border {
+  border: 1px solid rgba(194, 166, 118, 0.35);
+}
+
+.gold-border-double {
+  border: 1px solid rgba(194, 166, 118, 0.3);
+  position: relative;
+}
+.gold-border-double::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(194, 166, 118, 0.2);
+  pointer-events: none;
+}
+
+.vintage-shadow {
+  box-shadow: 0 15px 35px -10px rgba(44, 37, 32, 0.12);
+}
+
+/* Subtle image overlay for cinematic feel */
+.cinematic-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 16, 14, 0.2) 0%,
+    rgba(20, 16, 14, 0.05) 40%,
+    rgba(20, 16, 14, 0.35) 80%,
+    rgba(20, 16, 14, 0.75) 100%
+  );
+}
+
+.light-cinematic-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(250, 247, 242, 0.1) 0%,
+    rgba(250, 247, 242, 0) 30%,
+    rgba(250, 247, 242, 0.6) 80%,
+    rgba(250, 247, 242, 0.95) 100%
+  );
+}
