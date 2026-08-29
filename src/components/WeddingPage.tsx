@@ -5,19 +5,18 @@ import { weddingConfig } from "@/config/wedding.config";
 import { DesktopContainer } from "@/components/layout/DesktopContainer";
 import { ToastProvider } from "@/components/layout/Toast";
 import { MusicPlayer } from "@/components/layout/MusicPlayer";
+
 import { HeroSection } from "@/components/sections/01_HeroSection";
-import { InvitationSection } from "@/components/sections/02_InvitationSection";
-import { CoupleSection } from "@/components/sections/03_CoupleSection";
-import { StorySection } from "@/components/sections/04_StorySection";
-import { WeddingDateSection } from "@/components/sections/05_WeddingDateSection";
-import { CountdownSection } from "@/components/sections/06_CountdownSection";
+import { CalendarInvitationSection } from "@/components/sections/02_CalendarInvitationSection";
+import { AlbumOfLoveSection } from "@/components/sections/03_AlbumOfLoveSection";
+import { EnvelopeCountdownSection } from "@/components/sections/06_EnvelopeCountdownSection";
+import { CinematicLoveBanner } from "@/components/sections/09_CinematicLoveBanner";
 import { EventsSection } from "@/components/sections/07_EventsSection";
 import { GallerySection } from "@/components/sections/08_GallerySection";
-import { LoveLetterSection } from "@/components/sections/09_LoveLetterSection";
 import { VenueSection } from "@/components/sections/10_VenueSection";
 import { RSVPSection } from "@/components/sections/11_RSVPSection";
 import { GiftSection } from "@/components/sections/12_GiftSection";
-import { ClosingSection } from "@/components/sections/13_ClosingSection";
+import { JustMarriedSection } from "@/components/sections/13_JustMarriedSection";
 
 export const WeddingPage: React.FC = () => {
   return (
@@ -34,41 +33,35 @@ export const WeddingPage: React.FC = () => {
         {/* 01. HERO / SAVE THE DATE */}
         <HeroSection config={weddingConfig} />
 
-        {/* 02. WELCOME / INVITATION */}
-        <InvitationSection config={weddingConfig} />
+        {/* 02. CALENDAR & FORMAL INVITATION */}
+        <CalendarInvitationSection config={weddingConfig} />
 
-        {/* 03. COUPLE */}
-        <CoupleSection config={weddingConfig} />
+        {/* 03. ALBUM OF LOVE / STAGGERED COUPLE FRAMES */}
+        <AlbumOfLoveSection config={weddingConfig} />
 
-        {/* 04. OUR STORY */}
-        <StorySection config={weddingConfig} />
+        {/* 04. LUXURY ENVELOPE & REALTIME COUNTDOWN */}
+        <EnvelopeCountdownSection config={weddingConfig} />
 
-        {/* 05. WEDDING DATE */}
-        <WeddingDateSection config={weddingConfig} />
+        {/* 05. ALL OF ME LOVE ALL OF YOU BANNER */}
+        <CinematicLoveBanner config={weddingConfig} />
 
-        {/* 06. COUNTDOWN */}
-        <CountdownSection config={weddingConfig} />
-
-        {/* 07. WEDDING EVENTS */}
+        {/* 06. WEDDING TIMELINE & EVENTS */}
         <EventsSection config={weddingConfig} />
 
-        {/* 08. PHOTO GALLERY */}
+        {/* 07. EDITORIAL PHOTO GALLERY & THUMBNAILS */}
         <GallerySection config={weddingConfig} />
 
-        {/* 09. LOVE STORY / MESSAGE */}
-        <LoveLetterSection config={weddingConfig} />
-
-        {/* 10. LOCATION */}
+        {/* 08. VENUE LOCATION & MAPS */}
         <VenueSection config={weddingConfig} />
 
-        {/* 11. RSVP */}
+        {/* 09. RSVP FORM */}
         <RSVPSection config={weddingConfig} />
 
-        {/* 12. GIFT / WEDDING WISH */}
+        {/* 10. WEDDING GIFT & QR */}
         <GiftSection config={weddingConfig} />
 
-        {/* 13. FINAL PHOTO + CLOSING */}
-        <ClosingSection config={weddingConfig} />
+        {/* 11. JUST MARRIED CLOSING & PARENTS CARD */}
+        <JustMarriedSection config={weddingConfig} />
       </DesktopContainer>
     </ToastProvider>
   );
