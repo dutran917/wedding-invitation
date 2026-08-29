@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Music, Pause, Play } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Music, Play } from "lucide-react";
 
 interface MusicPlayerProps {
   src: string;
@@ -19,6 +18,8 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const userPausedRef = useRef<boolean>(false);
+  const isUnlockedRef = useRef<boolean>(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -26,57 +27,67 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
 
     audio.volume = 0.5;
 
-    const startAudio = () => {
+    const playAudio = () => {
+      if (userPausedRef.current) return;
       audio
         .play()
         .then(() => {
           setIsPlaying(true);
+          isUnlockedRef.current = true;
         })
         .catch(() => {
-          // Autoplay policy prevented immediate playback
+          // Blocked by browser autoplay restrictions until interaction
         });
     };
 
     if (autoPlay) {
-      // 1. Attempt immediate playback
-      startAudio();
+      // 1. Try immediate playback
+      playAudio();
 
-      // 2. Add one-time unlock listeners for mobile (touch/scroll/click)
-      const handleUserUnlock = () => {
-        if (!isPlaying) {
-          startAudio();
+      // 2. Add one-time user gesture listeners
+      const handleFirstGesture = () => {
+        if (isUnlockedRef.current || userPausedRef.current) {
+          removeListeners();
+          return;
         }
-        cleanupListeners();
+        playAudio();
+        removeListeners();
       };
 
-      const cleanupListeners = () => {
-        window.removeEventListener("touchstart", handleUserUnlock);
-        window.removeEventListener("scroll", handleUserUnlock);
-        window.removeEventListener("click", handleUserUnlock);
+      const removeListeners = () => {
+        window.removeEventListener("touchstart", handleFirstGesture);
+        window.removeEventListener("scroll", handleFirstGesture);
+        window.removeEventListener("click", handleFirstGesture);
       };
 
-      window.addEventListener("touchstart", handleUserUnlock, { once: true, passive: true });
-      window.addEventListener("scroll", handleUserUnlock, { once: true, passive: true });
-      window.addEventListener("click", handleUserUnlock, { once: true, passive: true });
+      window.addEventListener("touchstart", handleFirstGesture, { once: true, passive: true });
+      window.addEventListener("scroll", handleFirstGesture, { once: true, passive: true });
+      window.addEventListener("click", handleFirstGesture, { once: true, passive: true });
 
       return () => {
-        cleanupListeners();
+        removeListeners();
       };
     }
-  }, [autoPlay, isPlaying]);
+  }, [autoPlay]);
 
   const togglePlay = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
+      userPausedRef.current = true; // Mark as explicitly paused by user
       audio.pause();
       setIsPlaying(false);
     } else {
+      userPausedRef.current = false; // Resume playback
+      isUnlockedRef.current = true;
       audio
         .play()
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          setIsPlaying(true);
+        })
         .catch((err) => console.log("Play error:", err));
     }
   };
@@ -95,7 +106,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       <button
         onClick={togglePlay}
         aria-label={isPlaying ? "Tạm dừng nhạc" : "Phát nhạc nền"}
-        className="group relative flex items-center justify-center p-2 rounded-full bg-ivory-50/90 backdrop-blur-md border border-gold-400/50 shadow-md text-espresso-400 hover:text-espresso-500 hover:border-gold-500 transition-all duration-300 active:scale-95"
+        className="group relative flex items-center justify-center p-2 rounded-full bg-ivory-50/90 backdrop-blur-md border border-gold-400/50 shadow-md text-espresso-400 hover:text-espresso-500 hover:border-gold-500 transition-all duration-300 active:scale-95 cursor-pointer select-none"
       >
         {/* Spinning vinyl disc */}
         <div
