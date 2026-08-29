@@ -11,6 +11,7 @@ import { CalendarInvitationSection } from "@/components/sections/02_CalendarInvi
 import { AlbumOfLoveSection } from "@/components/sections/03_AlbumOfLoveSection";
 import { EnvelopeCountdownSection } from "@/components/sections/06_EnvelopeCountdownSection";
 import { CinematicLoveBanner } from "@/components/sections/09_CinematicLoveBanner";
+import { StorySection } from "@/components/sections/04_StorySection";
 import { EventsSection } from "@/components/sections/07_EventsSection";
 import { GallerySection } from "@/components/sections/08_GallerySection";
 import { VenueSection } from "@/components/sections/10_VenueSection";

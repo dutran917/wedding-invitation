@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
-import { BotanicalDivider } from "@/components/ui/BotanicalOrnament";
 import { MapPin, Navigation, Calendar, Clock } from "lucide-react";
 
 interface VenueSectionProps {
@@ -14,15 +14,14 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
   const { venue, weddingDate, weddingTime } = config;
 
   return (
-    <section className="relative w-full py-16 px-5 sm:px-8 bg-ivory-50 text-espresso-400">
-      <div className="text-center mb-10">
-        <span className="font-sans text-[11px] sm:text-xs tracking-ultra text-gold-600 uppercase font-medium">
+    <section className="relative w-full py-16 px-4 sm:px-6 bg-[#F4EFE6] text-espresso-400">
+      <div className="text-center mb-8 max-w-[380px] mx-auto">
+        <span className="font-sans text-[10px] tracking-ultra text-gold-600 uppercase font-semibold">
           ĐỊA ĐIỂM TỔ CHỨC
         </span>
         <h2 className="font-serif text-3xl sm:text-4xl text-espresso-500 font-normal mt-1 tracking-wide">
           The Wedding Venue
         </h2>
-        <BotanicalDivider variant="minimal" />
       </div>
 
       <motion.div
@@ -30,28 +29,34 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.8 }}
-        className="max-w-sm mx-auto bg-cream-50/90 border border-gold-400/35 p-6 sm:p-7 shadow-paper rounded-sm text-center"
+        className="max-w-[380px] mx-auto bg-white/95 border border-gold-400/40 p-4 sm:p-5 shadow-paper rounded-xs text-center"
       >
-        <div className="w-12 h-12 rounded-full bg-ivory-50 border border-gold-400/50 flex items-center justify-center mx-auto mb-4 text-gold-600 shadow-sm">
-          <MapPin className="w-5 h-5" />
+        {/* Venue Photo Frame */}
+        <div className="relative w-full aspect-[16/10] rounded-xs overflow-hidden mb-4 shadow-sm group">
+          <Image
+            src="/image/wedding/T_T00446.JPG"
+            alt={venue.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-700"
+            sizes="(max-width: 768px) 100vw, 380px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70" />
+          <div className="absolute bottom-2.5 left-3 right-3 text-left">
+            <span className="font-sans text-[9px] tracking-widest text-gold-300 uppercase font-semibold">
+              TRUNG TÂM TIỆC CƯỚI & SỰ KIỆN
+            </span>
+            <h4 className="font-serif text-base sm:text-lg text-white font-medium">
+              {venue.name}
+            </h4>
+          </div>
         </div>
 
-        <h3 className="font-serif text-2xl text-espresso-500 font-medium tracking-wide">
-          {venue.name}
-        </h3>
-
-        {venue.subVenue && (
-          <p className="font-sans text-xs tracking-widest text-gold-600 uppercase font-semibold mt-1">
-            {venue.subVenue}
-          </p>
-        )}
-
-        <p className="font-serif text-sm text-espresso-300 italic mt-3 leading-relaxed">
+        <p className="font-serif text-xs sm:text-sm text-espresso-300 italic mb-4 leading-relaxed">
           {venue.address}
         </p>
 
         {/* Date & Time info box */}
-        <div className="grid grid-cols-2 gap-3 my-6 py-3 border-y border-gold-300/30 text-xs">
+        <div className="grid grid-cols-2 gap-2 my-4 py-2.5 border-y border-gold-300/30 text-xs">
           <div className="flex items-center justify-center gap-1.5 text-espresso-400">
             <Calendar className="w-3.5 h-3.5 text-gold-600" />
             <span className="font-medium">{weddingDate.split("-").reverse().join("/")}</span>
@@ -67,10 +72,10 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
           href={venue.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xs bg-espresso-500 hover:bg-espresso-400 text-ivory-50 font-sans text-xs tracking-widest uppercase font-medium border border-gold-400/50 shadow-sm transition-all duration-300 hover:shadow-gold active:scale-[0.98]"
+          className="inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xs bg-espresso-500 hover:bg-espresso-400 text-ivory-50 font-sans text-xs tracking-widest uppercase font-semibold border border-gold-400/50 shadow-sm transition-all duration-300 hover:shadow-gold active:scale-[0.98]"
         >
-          <Navigation className="w-4 h-4 text-gold-400" />
-          <span>Xem Bản Đồ & Chỉ Đường</span>
+          <Navigation className="w-3.5 h-3.5 text-gold-400 fill-gold-400" />
+          <span>Mở Bản Đồ Chỉ Đường</span>
         </a>
       </motion.div>
     </section>
