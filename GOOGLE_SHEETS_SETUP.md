@@ -15,3 +15,5 @@ Trang quản lý dùng file local khi phát triển. Khi deploy lên Vercel ho�
    - `ADMIN_SESSION_SECRET`: chuỗi ngẫu nhiên dài để ký phiên đăng nhập.
 
 Sau khi deploy lại, trang `/quan-ly` sẽ hiển thị nguồn dữ liệu là **Google Sheets**.
+
+ok chưa
