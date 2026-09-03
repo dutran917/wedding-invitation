@@ -6,6 +6,12 @@ const DATA_DIRECTORY = path.join(process.cwd(), "data");
 const DATA_FILE = path.join(DATA_DIRECTORY, "rsvps.json");
 let writeQueue: Promise<void> = Promise.resolve();
 
+type GoogleSheetsPayload = {
+  ok: boolean;
+  error?: string;
+  responses?: RsvpResponse[];
+};
+
 const readLocalResponses = async (): Promise<RsvpResponse[]> => {
   try {
     const raw = await readFile(DATA_FILE, "utf8");
@@ -16,7 +22,10 @@ const readLocalResponses = async (): Promise<RsvpResponse[]> => {
   }
 };
 
-const callGoogleSheets = async (action: "append" | "list", response?: RsvpResponse) => {
+const callGoogleSheets = async (
+  action: "append" | "list",
+  response?: RsvpResponse
+): Promise<GoogleSheetsPayload | null> => {
   const webhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
   const sharedSecret = process.env.GOOGLE_SHEETS_SHARED_SECRET;
   if (!webhookUrl || !sharedSecret) return null;
@@ -29,14 +38,34 @@ const callGoogleSheets = async (action: "append" | "list", response?: RsvpRespon
   });
 
   if (!result.ok) throw new Error(`Google Sheets request failed: ${result.status}`);
-  const payload = await result.json();
+  const responseText = await result.text();
+  let payload: GoogleSheetsPayload;
+  try {
+    payload = JSON.parse(responseText) as GoogleSheetsPayload;
+  } catch {
+    throw new Error("Google Sheets returned an invalid response");
+  }
   if (!payload.ok) throw new Error(payload.error || "Google Sheets request failed");
   return payload;
 };
 
 export const appendRsvpResponse = async (response: RsvpResponse) => {
-  const sheetsResult = await callGoogleSheets("append", response);
-  if (sheetsResult) return "google-sheets" as const;
+  try {
+    const sheetsResult = await callGoogleSheets("append", response);
+    if (sheetsResult) return "google-sheets" as const;
+  } catch (appendError) {
+    // Apps Script can finish writing a row even when its HTTP response is lost or
+    // malformed. Confirm by the response ID before telling the guest it failed.
+    try {
+      const verification = await callGoogleSheets("list");
+      const wasSaved = verification?.responses?.some((item) => item.id === response.id);
+      if (wasSaved) return "google-sheets" as const;
+    } catch (verificationError) {
+      console.error("Unable to verify Google Sheets RSVP", verificationError);
+    }
+
+    throw appendError;
+  }
 
   writeQueue = writeQueue.then(async () => {
     await mkdir(DATA_DIRECTORY, { recursive: true });

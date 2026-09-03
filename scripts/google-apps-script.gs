@@ -36,8 +36,28 @@ function doPost(event) {
     const sheet = getSheet();
     if (payload.action === "append") {
       const response = payload.response || {};
-      sheet.appendRow(HEADERS.map((header) => response[header] ?? ""));
-      return jsonResponse({ ok: true });
+      const responseId = String(response.id || "");
+      const lock = LockService.getScriptLock();
+      lock.waitLock(10000);
+
+      try {
+        const lastRow = sheet.getLastRow();
+        const alreadyExists = responseId && lastRow > 1
+          ? sheet
+              .getRange(2, 1, lastRow - 1, 1)
+              .getDisplayValues()
+              .some((row) => String(row[0]) === responseId)
+          : false;
+
+        if (!alreadyExists) {
+          sheet.appendRow(HEADERS.map((header) => response[header] ?? ""));
+          SpreadsheetApp.flush();
+        }
+
+        return jsonResponse({ ok: true, duplicate: Boolean(alreadyExists) });
+      } finally {
+        lock.releaseLock();
+      }
     }
 
     if (payload.action === "list") {
