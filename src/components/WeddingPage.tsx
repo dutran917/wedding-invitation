@@ -19,17 +19,28 @@ import { RSVPSection } from "@/components/sections/11_RSVPSection";
 import { GiftSection } from "@/components/sections/12_GiftSection";
 import { JustMarriedSection } from "@/components/sections/13_JustMarriedSection";
 import { GuestbookSection } from "@/components/sections/12_GuestbookSection";
+import { parseInvitationFromParams } from "@/lib/invitation-token";
 
 export const WeddingPage: React.FC = () => {
   const [invitationOpened, setInvitationOpened] = useState(false);
   const [guest, setGuest] = useState({ name: "", salutation: "" });
+  const [musicConfig, setMusicConfig] = useState(weddingConfig.music);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const data = parseInvitationFromParams(params);
+
     setGuest({
-      name: params.get("guest")?.trim() || "",
-      salutation: params.get("xung-ho")?.trim() || "",
+      name: data.guest,
+      salutation: data.salutation,
     });
+
+    if (data.troll) {
+      setMusicConfig((prev) => ({
+        ...prev,
+        src: "/audio/theme_song_wd_invitation.mp3",
+      }));
+    }
   }, []);
 
   return (
@@ -47,10 +58,10 @@ export const WeddingPage: React.FC = () => {
       <DesktopContainer>
         {/* Floating Music Player */}
         <MusicPlayer
-          src={weddingConfig.music.src}
-          title={weddingConfig.music.title}
-          artist={weddingConfig.music.artist}
-          autoPlay={weddingConfig.music.autoPlay}
+          src={musicConfig.src}
+          title={musicConfig.title}
+          artist={musicConfig.artist}
+          autoPlay={musicConfig.autoPlay}
           visible={invitationOpened}
         />
 

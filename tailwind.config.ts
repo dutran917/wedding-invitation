@@ -44,7 +44,7 @@ const config: Config = {
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', '"Playfair Display"', "Georgia", "serif"],
-        script: ['"Alex Brush"', "cursive"],
+        script: ['"Great Vibes"', '"Alex Brush"', "cursive"],
         sans: ['"Montserrat"', "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "sans-serif"],
       },
       letterSpacing: {

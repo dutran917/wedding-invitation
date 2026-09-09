@@ -83,14 +83,20 @@ export const InvitationOpening: React.FC<InvitationOpeningProps> = ({
           <p className="relative font-serif text-xs uppercase tracking-[0.28em] text-gold-700">
             The wedding invitation
           </p>
-          <div className="relative my-5 h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent" />
-          <h1 className="relative font-script text-5xl leading-[0.9] text-espresso-500">
-            {config.groom.name}
-          </h1>
-          <span className="relative my-1 block font-serif text-xl italic text-gold-600">&</span>
-          <h1 className="relative font-script text-5xl leading-[0.9] text-espresso-500">
-            {config.bride.name}
-          </h1>
+          <div className="relative my-4 flex flex-col items-center justify-center">
+            <span
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-serif italic text-[6rem] leading-none text-gold-600 pointer-events-none select-none z-0"
+              style={{ opacity: 0.4 }}
+            >
+              &
+            </span>
+            <h1 className="relative z-10 font-script text-5xl leading-tight text-espresso-500">
+              {config.groom.name}
+            </h1>
+            <h1 className="relative z-10 font-script text-5xl leading-tight text-espresso-500 mt-2">
+              {config.bride.name}
+            </h1>
+          </div>
           <p className="relative mt-6 font-serif text-sm tracking-[0.22em] text-espresso-300">
             {config.weddingDate.split("-").reverse().join(" . ")}
           </p>

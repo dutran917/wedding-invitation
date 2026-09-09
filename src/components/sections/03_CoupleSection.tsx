@@ -39,8 +39,9 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ config }) => {
               src={groom.image}
               alt={groom.fullName}
               fill
+              quality={95}
               className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              sizes="(max-width: 768px) 90vw, 400px"
+              sizes="(max-width: 768px) 100vw, 600px"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
             
@@ -77,8 +78,9 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({ config }) => {
               src={bride.image}
               alt={bride.fullName}
               fill
+              quality={95}
               className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              sizes="(max-width: 768px) 90vw, 400px"
+              sizes="(max-width: 768px) 100vw, 600px"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
             

@@ -167,16 +167,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
 
           <SpiralName text={groom.name} isRevealed={isRevealed} delay={0.56} />
 
-          <div className="relative -my-2 flex items-center justify-center">
+          <div className="relative -my-6 flex items-center justify-center">
             <motion.span
               initial={false}
               animate={
                 isRevealed
-                  ? { opacity: 1, scale: 1, rotate: 0 }
+                  ? { opacity: 0.4, scale: 1, rotate: 0 }
                   : { opacity: 0, scale: 0.2, rotate: -240 }
               }
               transition={{ type: "spring", stiffness: 90, damping: 12, delay: 1.1 }}
-              className="font-script text-5xl sm:text-6xl text-gold-300 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] select-none z-10"
+              className="font-serif italic text-[6rem] leading-none text-gold-300 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] select-none z-0"
+              style={{ opacity: 0.4 }}
             >
               &
             </motion.span>

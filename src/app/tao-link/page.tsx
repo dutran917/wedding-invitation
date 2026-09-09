@@ -3,19 +3,25 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { Check, Copy, ExternalLink, Link2 } from "lucide-react";
+import { encodeInvitationToken } from "@/lib/invitation-token";
 
 export default function GuestLinkGeneratorPage() {
   const [guestName, setGuestName] = useState("");
   const [salutation, setSalutation] = useState("Bạn");
+  const [isTroll, setIsTroll] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const invitationUrl = useMemo(() => {
     if (typeof window === "undefined" || !guestName.trim()) return "";
+    const token = encodeInvitationToken({
+      guest: guestName.trim(),
+      salutation: salutation.trim(),
+      troll: isTroll,
+    });
     const url = new URL("/", window.location.origin);
-    url.searchParams.set("guest", guestName.trim());
-    if (salutation.trim()) url.searchParams.set("xung-ho", salutation.trim());
+    url.searchParams.set("i", token);
     return url.toString();
-  }, [guestName, salutation]);
+  }, [guestName, salutation, isTroll]);
 
   const copyLink = async () => {
     if (!invitationUrl) return;
@@ -70,6 +76,18 @@ export default function GuestLinkGeneratorPage() {
               className="w-full border border-gold-300/60 bg-white px-4 py-3 font-serif text-base outline-none placeholder:text-espresso-100 focus:border-gold-600"
               autoFocus
             />
+          </label>
+
+          <label className="flex items-center gap-3 cursor-pointer select-none py-1">
+            <input
+              type="checkbox"
+              checked={isTroll}
+              onChange={(e) => setIsTroll(e.target.checked)}
+              className="w-4 h-4 rounded border-gold-400 text-gold-600 focus:ring-gold-500 accent-[#b8860b]"
+            />
+            <span className="font-serif text-sm text-espresso-400">
+              Nhạc Troll (Theme Song Troll) <span className="text-xs text-gold-700">(`?troll=true`)</span>
+            </span>
           </label>
 
           <div className="min-h-[88px] border border-dashed border-gold-400/60 bg-cream-50 p-4">

@@ -84,6 +84,19 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     };
   }, [autoPlay]);
 
+  // Handle source changes (e.g. param troll=true)
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isUnlockedRef.current && !userPausedRef.current) {
+      audio.load();
+      audio
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => console.log("Play error on track change:", err));
+    }
+  }, [src]);
+
   const togglePlay = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();

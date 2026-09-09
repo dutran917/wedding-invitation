@@ -6,7 +6,7 @@ export const weddingConfig: WeddingConfig = {
     fullName: "Quốc Du",
     role: "THE GROOM",
     title: "Chú rể",
-    image: "/image/wedding/chu_re.JPG",
+    image: "/image/wedding/chu_re.webp",
     parents: {
       father: "Đại diện Nhà Trai",
       mother: "Gia đình Nhà Trai",
@@ -18,7 +18,7 @@ export const weddingConfig: WeddingConfig = {
     fullName: "Phương Ly",
     role: "THE BRIDE",
     title: "Cô dâu",
-    image: "/image/wedding/co_dau.JPG",
+    image: "/image/wedding/co_dau.webp",
     parents: {
       father: "Đại diện Nhà Gái",
       mother: "Gia đình Nhà Gái",

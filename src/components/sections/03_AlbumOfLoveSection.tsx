@@ -60,8 +60,9 @@ export const AlbumOfLoveSection: React.FC<AlbumOfLoveSectionProps> = ({ config }
                 src={groom.image}
                 alt={groom.name}
                 fill
+                quality={95}
                 className="object-cover object-top"
-                sizes="(max-width: 768px) 50vw, 220px"
+                sizes="(max-width: 768px) 80vw, 500px"
               />
             </div>
             {/* Label box */}
@@ -88,8 +89,9 @@ export const AlbumOfLoveSection: React.FC<AlbumOfLoveSectionProps> = ({ config }
                 src={bride.image}
                 alt={bride.name}
                 fill
+                quality={95}
                 className="object-cover object-top"
-                sizes="(max-width: 768px) 50vw, 220px"
+                sizes="(max-width: 768px) 80vw, 500px"
               />
             </div>
             {/* Label box */}

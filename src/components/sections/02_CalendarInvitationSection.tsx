@@ -136,12 +136,17 @@ export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({
             </div>
           )}
 
-          <div className="space-y-1">
-            <h2 className="font-script text-4xl sm:text-5xl text-espresso-500 leading-tight">
+          <div className="relative my-4 flex flex-col items-center justify-center">
+            <span
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-serif italic text-[6rem] leading-none text-gold-600 pointer-events-none select-none z-0"
+              style={{ opacity: 0.4 }}
+            >
+              &
+            </span>
+            <h2 className="relative z-10 font-script text-4xl sm:text-5xl text-espresso-500 leading-tight">
               {groom.name}
             </h2>
-            <span className="font-serif italic text-xl text-gold-500 block">&</span>
-            <h2 className="font-script text-4xl sm:text-5xl text-espresso-500 leading-tight">
+            <h2 className="relative z-10 font-script text-4xl sm:text-5xl text-espresso-500 leading-tight mt-2">
               {bride.name}
             </h2>
           </div>
