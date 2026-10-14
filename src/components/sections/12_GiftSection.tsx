@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { WeddingConfig, BankAccount } from "@/types/wedding";
-import { BotanicalDivider } from "@/components/ui/BotanicalOrnament";
+import { BotanicalDivider, WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 import { useToast } from "@/components/layout/Toast";
 import { Copy, QrCode, X, CreditCard, Gift } from "lucide-react";
 
@@ -28,8 +28,9 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ config }) => {
   };
 
   return (
-    <section className="relative w-full py-12 px-5 sm:px-8 bg-ivory-50 text-espresso-400">
-      <div className="text-center mb-10">
+    <section className="paper-texture relative w-full py-12 px-5 sm:px-8 bg-ivory-50 text-espresso-400 overflow-hidden">
+      <WeddingCornerLineArt />
+      <div className="relative z-10 text-center mb-10">
         <span className="font-sans text-[11px] sm:text-xs tracking-ultra text-gold-600 uppercase font-medium">
           GỬI QUÀ CHÚC PHÚC
         </span>
@@ -42,7 +43,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ config }) => {
         </p>
       </div>
 
-      <div className="max-w-sm mx-auto space-y-6">
+      <div className="relative z-10 max-w-sm mx-auto space-y-6">
         {gift.accounts.map((acc, idx) => (
           <motion.div
             key={idx}

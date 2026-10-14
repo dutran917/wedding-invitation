@@ -18,7 +18,7 @@ export const ClosingSection: React.FC<ClosingSectionProps> = ({ config }) => {
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src={closing.image || "/image/wedding/T_T00699.JPG"}
+          src={closing.image || "/image/wedding/optimized/IMG_5928.webp"}
           alt="Thank You - Couple Closing"
           fill
           className="object-cover object-[center_35%]"

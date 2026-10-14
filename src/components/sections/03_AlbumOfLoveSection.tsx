@@ -17,7 +17,7 @@ export const AlbumOfLoveSection: React.FC<AlbumOfLoveSectionProps> = ({ config }
       {/* Background with vertical couple photo blur/ambient */}
       <div className="absolute inset-0 opacity-25">
         <Image
-          src="/image/wedding/T_T00033.JPG"
+          src="/image/wedding/optimized/IMG_5923.webp"
           alt="Album backdrop"
           fill
           className="object-cover object-top"

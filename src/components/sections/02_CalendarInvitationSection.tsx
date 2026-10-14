@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
 import { CalendarPlus, Navigation } from "lucide-react";
 import { downloadWeddingCalendar } from "@/lib/calendar";
+import { WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 
 interface CalendarInvitationProps {
   config: WeddingConfig;
@@ -43,6 +44,7 @@ export const CalendarInvitationSection: React.FC<CalendarInvitationProps> = ({
     <section className="relative w-full py-12 px-4 sm:px-6 bg-[#FAF7F2] text-espresso-400 overflow-hidden">
       {/* Subtle floral background texture */}
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[radial-gradient(#8E7240_1px,transparent_1px)] [background-size:16px_16px]" />
+      <WeddingCornerLineArt />
 
       <div className="max-w-[400px] mx-auto text-center relative z-10">
         {/* Month Header in Calligraphy */}

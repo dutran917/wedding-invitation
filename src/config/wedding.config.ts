@@ -39,28 +39,22 @@ export const weddingConfig: WeddingConfig = {
   },
   events: [
     {
-      time: "17:00",
+      time: "16:30",
       title: "ĐÓN KHÁCH & CHECK-IN",
       description: "Chụp ảnh lưu niệm & thưởng thức Welcome Drink tại sảnh tiệc",
       icon: "camera",
     },
     {
-      time: "18:00",
+      time: "17:00",
       title: "LỄ THÀNH HÔN",
       description: "Khoảnh khắc trao nhẫn thiêng liêng & lời thề nguyện",
       icon: "ring",
     },
     {
-      time: "18:30",
+      time: "17:30",
       title: "KHAI TIỆC MỪNG",
       description: "Thưởng thức ẩm thực & nâng ly chúc mừng hạnh phúc",
       icon: "dinner",
-    },
-    {
-      time: "19:30",
-      title: "AFTER PARTY & ÂM NHẠC",
-      description: "Cắt bánh cưới, khiêu vũ và những khoảnh khắc thăng hoa",
-      icon: "party",
     },
   ],
   story: {
@@ -97,7 +91,7 @@ export const weddingConfig: WeddingConfig = {
   gallery: [
     {
       id: "g1",
-      src: "/image/wedding/T_T00859.JPG",
+      src: "/image/wedding/optimized/IMG_5900.webp",
       alt: "Khoảnh khắc trao lời hẹn ước",
       aspectRatio: "portrait",
       caption: "A moment of eternity",
@@ -105,7 +99,7 @@ export const weddingConfig: WeddingConfig = {
     },
     {
       id: "g2",
-      src: "/image/wedding/T_T00033.JPG",
+      src: "/image/wedding/optimized/IMG_5905.webp",
       alt: "Ánh mắt đắm say",
       aspectRatio: "portrait",
       caption: "In your eyes, I found my home",
@@ -113,23 +107,23 @@ export const weddingConfig: WeddingConfig = {
     },
     {
       id: "g3",
-      src: "/image/wedding/T_T00018.JPG",
+      src: "/image/wedding/optimized/IMG_5909.webp",
       alt: "Dịu dàng bên nhau",
-      aspectRatio: "square",
+      aspectRatio: "portrait",
       caption: "Gentle whispers",
       layoutType: "overlap",
     },
     {
       id: "g4",
-      src: "/image/wedding/T_T00699.JPG",
+      src: "/image/wedding/optimized/IMG_5923.webp",
       alt: "Cùng bước trên lễ đường",
-      aspectRatio: "landscape",
+      aspectRatio: "portrait",
       caption: "Walking towards forever",
       layoutType: "full",
     },
     {
       id: "g5",
-      src: "/image/wedding/T_T00780.JPG",
+      src: "/image/wedding/optimized/IMG_5928.webp",
       alt: "Tay trong tay",
       aspectRatio: "portrait",
       caption: "Holding hand through seasons",
@@ -137,7 +131,7 @@ export const weddingConfig: WeddingConfig = {
     },
     {
       id: "g6",
-      src: "/image/wedding/T_T00817.JPG",
+      src: "/image/wedding/optimized/IMG_5938.webp",
       alt: "Nụ cười rạng rỡ",
       aspectRatio: "portrait",
       caption: "Pure joy & laughter",
@@ -145,15 +139,15 @@ export const weddingConfig: WeddingConfig = {
     },
     {
       id: "g7",
-      src: "/image/wedding/T_T01187.JPG",
+      src: "/image/wedding/optimized/IMG_5943.webp",
       alt: "Khoảnh khắc lãng mạn",
-      aspectRatio: "landscape",
+      aspectRatio: "portrait",
       caption: "Under the golden light",
       layoutType: "editorial-strip",
     },
     {
       id: "g8",
-      src: "/image/wedding/T_T00446.JPG",
+      src: "/image/wedding/optimized/IMG_5985.webp",
       alt: "Nàng thơ trong tà váy cưới",
       aspectRatio: "portrait",
       caption: "The elegant bride",
@@ -166,7 +160,7 @@ export const weddingConfig: WeddingConfig = {
     content:
       "Khi nhận ra rằng mình muốn dành cả quãng đời còn lại bên một người, chúng ta chỉ mong hành trình ấy bắt đầu sớm hơn một chút. Tình yêu không phải là đích đến, mà là từng bước đi cùng nhau – có lúc bình yên, có khi thử thách, nhưng mỗi chặng đường đều dạy chúng ta nhiều điều.",
     author: "Quốc Du & Phương Ly",
-    backgroundImage: "/image/wedding/T_T00859.JPG",
+    backgroundImage: "/image/wedding/optimized/IMG_5938.webp",
   },
   gift: {
     title: "HỘP MỪNG CƯỚI",
@@ -201,6 +195,6 @@ export const weddingConfig: WeddingConfig = {
   closing: {
     thankYouText: "THANK YOU",
     message: "Cảm ơn bạn đã luôn là một phần đặc biệt trong câu chuyện tình yêu của chúng tôi. Hẹn gặp lại bạn trong ngày hạnh phúc nhất!",
-    image: "/image/wedding/T_T00699.JPG",
+    image: "/image/wedding/optimized/IMG_5928.webp",
   },
 };

@@ -13,12 +13,11 @@ export const DesktopContainer: React.FC<DesktopContainerProps> = ({ children }) 
       {/* Ambient background for desktop widescreen */}
       <div className="fixed inset-0 hidden md:block overflow-hidden pointer-events-none opacity-20">
         <Image
-          src="/image/wedding/T_T00859.JPG"
+          src="/image/wedding/optimized/IMG_5943.webp"
           alt="Ambient Wedding Background"
           fill
           className="object-cover blur-3xl scale-125"
-          sizes="100vw"
-          priority
+          sizes="(min-width: 768px) 100vw, 1px"
         />
         <div className="absolute inset-0 bg-[#181513]/70" />
       </div>

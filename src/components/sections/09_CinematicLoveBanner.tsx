@@ -15,10 +15,10 @@ export const CinematicLoveBanner: React.FC<CinematicLoveBannerProps> = ({ config
       {/* Cinematic Full Bleed Couple Photo */}
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/image/wedding/T_T00859.JPG"
+          src="/image/wedding/optimized/IMG_1908.webp"
           alt="All of me loves all of you"
           fill
-          className="object-cover object-[center_35%]"
+          className="object-cover object-[center_76%]"
           sizes="(max-width: 768px) 100vw, 440px"
         />
         {/* Editorial overlay */}

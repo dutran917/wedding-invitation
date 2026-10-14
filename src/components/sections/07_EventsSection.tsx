@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
-import { Camera, Sparkles, UtensilsCrossed, Music2, Heart } from "lucide-react";
+import { Camera, Sparkles, UtensilsCrossed, Heart } from "lucide-react";
+import { WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 
 interface EventsSectionProps {
   config: WeddingConfig;
@@ -21,36 +21,17 @@ export const EventsSection: React.FC<EventsSectionProps> = ({ config }) => {
         return <Sparkles className="w-4 h-4 text-gold-600" />;
       case "dinner":
         return <UtensilsCrossed className="w-4 h-4 text-gold-600" />;
-      case "party":
-      case "music":
-        return <Music2 className="w-4 h-4 text-gold-600" />;
       default:
         return <Heart className="w-4 h-4 text-gold-600" />;
     }
   };
 
   return (
-    <section className="relative w-full py-12 px-4 sm:px-6 bg-[#FAF7F2] text-espresso-400 overflow-hidden">
-      {/* Top Banner Photo Frame */}
-      <div className="max-w-[380px] mx-auto text-center mb-8">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative w-28 h-28 mx-auto rounded-full p-1 border-2 border-gold-400/60 shadow-md mb-4 bg-white"
-        >
-          <div className="relative w-full h-full rounded-full overflow-hidden">
-            <Image
-              src="/image/wedding/nhan_cuoi.jpg"
-              alt="Wedding Rings"
-              fill
-              className="object-cover"
-              sizes="120px"
-            />
-          </div>
-        </motion.div>
+    <section className="paper-texture relative w-full px-4 pb-6 pt-14 sm:px-6 bg-[#FAF7F2] text-espresso-400 overflow-hidden">
+      <WeddingCornerLineArt />
 
+      {/* Top Banner Photo Frame */}
+      <div className="relative z-10 max-w-[380px] mx-auto text-center mb-8">
         <span className="font-script text-4xl sm:text-5xl text-gold-600 block">
           Timeline
         </span>

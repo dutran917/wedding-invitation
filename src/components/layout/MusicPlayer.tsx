@@ -9,6 +9,9 @@ interface MusicPlayerProps {
   artist?: string;
   autoPlay?: boolean;
   visible?: boolean;
+  loop?: boolean;
+  visualizeBeats?: boolean;
+  onEnded?: () => void;
 }
 
 export const MusicPlayer: React.FC<MusicPlayerProps> = ({
@@ -17,11 +20,55 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   artist = "Orchestra",
   autoPlay = true,
   visible = true,
+  loop = true,
+  visualizeBeats = false,
+  onEnded,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const userPausedRef = useRef<boolean>(false);
   const isUnlockedRef = useRef<boolean>(false);
+  const invitationStartedRef = useRef<boolean>(false);
+  const beatFrameRef = useRef<number | null>(null);
+
+  const stopBeatDetection = () => {
+    if (beatFrameRef.current !== null) {
+      window.cancelAnimationFrame(beatFrameRef.current);
+      beatFrameRef.current = null;
+    }
+  };
+
+  const startBeatDetection = () => {
+    if (!visualizeBeats || beatFrameRef.current !== null) return;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const beatInterval = 60 / 161;
+    let nextBeatAt = 0.1;
+    let beatIndex = 0;
+
+    const detectBeat = () => {
+      if (!audio.paused && !audio.ended && audio.currentTime >= nextBeatAt) {
+        const intensity = beatIndex % 4 === 0 ? 1.45 : beatIndex % 2 === 0 ? 1.2 : 1;
+        window.dispatchEvent(
+          new CustomEvent("wedding:troll-beat", {
+            detail: { intensity },
+          }),
+        );
+
+        beatIndex += 1;
+        nextBeatAt += beatInterval;
+        if (audio.currentTime - nextBeatAt > beatInterval) {
+          nextBeatAt = audio.currentTime + beatInterval;
+        }
+      }
+
+      beatFrameRef.current = window.requestAnimationFrame(detectBeat);
+    };
+
+    beatFrameRef.current = window.requestAnimationFrame(detectBeat);
+  };
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -43,52 +90,31 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     };
 
     const handleInvitationOpen = () => {
+      invitationStartedRef.current = true;
       userPausedRef.current = false;
-      playAudio();
+      startBeatDetection();
+      if (autoPlay) {
+        playAudio();
+      }
     };
 
     window.addEventListener("wedding:open-invitation", handleInvitationOpen);
 
-    if (autoPlay) {
-      // 1. Try immediate playback
-      playAudio();
-
-      // 2. Add one-time user gesture listeners
-      const handleFirstGesture = () => {
-        if (isUnlockedRef.current || userPausedRef.current) {
-          removeListeners();
-          return;
-        }
-        playAudio();
-        removeListeners();
-      };
-
-      const removeListeners = () => {
-        window.removeEventListener("touchstart", handleFirstGesture);
-        window.removeEventListener("scroll", handleFirstGesture);
-        window.removeEventListener("click", handleFirstGesture);
-      };
-
-      window.addEventListener("touchstart", handleFirstGesture, { once: true, passive: true });
-      window.addEventListener("scroll", handleFirstGesture, { once: true, passive: true });
-      window.addEventListener("click", handleFirstGesture, { once: true, passive: true });
-
-      return () => {
-        removeListeners();
-        window.removeEventListener("wedding:open-invitation", handleInvitationOpen);
-      };
-    }
-
     return () => {
+      stopBeatDetection();
       window.removeEventListener("wedding:open-invitation", handleInvitationOpen);
     };
-  }, [autoPlay]);
+  }, [autoPlay, visualizeBeats]);
 
   // Handle source changes (e.g. param troll=true)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (isUnlockedRef.current && !userPausedRef.current) {
+    if (
+      invitationStartedRef.current &&
+      isUnlockedRef.current &&
+      !userPausedRef.current
+    ) {
       audio.load();
       audio
         .play()
@@ -128,10 +154,11 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       <audio
         ref={audioRef}
         src={src}
-        loop
+        loop={loop}
         preload="metadata"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onEnded={onEnded}
       />
 
       <button

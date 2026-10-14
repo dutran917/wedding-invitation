@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
-import { BotanicalDivider } from "@/components/ui/BotanicalOrnament";
+import { BotanicalDivider, WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 import { useToast } from "@/components/layout/Toast";
 import confetti from "canvas-confetti";
 import { CheckCircle2, HeartHandshake, Send } from "lucide-react";
@@ -88,8 +88,9 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config, guestName }) =
   };
 
   return (
-    <section className="relative w-full py-12 px-5 sm:px-8 bg-cream-50/70 text-espresso-400">
-      <div className="text-center mb-10">
+    <section className="paper-texture relative w-full py-12 px-5 sm:px-8 bg-cream-50/70 text-espresso-400 overflow-hidden">
+      <WeddingCornerLineArt />
+      <div className="relative z-10 text-center mb-10">
         <span className="font-sans text-[11px] sm:text-xs tracking-ultra text-gold-600 uppercase font-medium">
           XÁC NHẬN THAM DỰ
         </span>
@@ -107,7 +108,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({ config, guestName }) =
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.8 }}
-        className="max-w-sm mx-auto bg-ivory-50 border border-gold-400/35 p-6 sm:p-8 shadow-paper rounded-sm"
+        className="relative z-10 max-w-sm mx-auto bg-ivory-50/95 border border-gold-400/35 p-6 sm:p-8 shadow-paper rounded-sm"
       >
         {isSubmitted ? (
           <motion.div

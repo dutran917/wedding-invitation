@@ -99,11 +99,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
         className="absolute inset-0 w-full h-full"
       >
         <Image
-          src="/image/wedding/T_T00859.JPG"
+          src="/image/wedding/optimized/IMG_1908.webp"
           alt="Save the Date - Wedding Couple"
           fill
           priority
-          className="object-cover object-[center_26%]"
+          className="object-cover object-center"
           sizes="(max-width: 768px) 100vw, 440px"
         />
         {/* Soft luxury multi-tier vignette overlay */}

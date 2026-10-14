@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { weddingConfig } from "@/config/wedding.config";
 import { DesktopContainer } from "@/components/layout/DesktopContainer";
@@ -24,7 +24,10 @@ import { parseInvitationFromParams } from "@/lib/invitation-token";
 export const WeddingPage: React.FC = () => {
   const [invitationOpened, setInvitationOpened] = useState(false);
   const [guest, setGuest] = useState({ name: "", salutation: "" });
+  const [trollMode, setTrollMode] = useState(false);
+  const [showTrollImage, setShowTrollImage] = useState(false);
   const [musicConfig, setMusicConfig] = useState(weddingConfig.music);
+  const trollImageTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -36,12 +39,31 @@ export const WeddingPage: React.FC = () => {
     });
 
     if (data.troll) {
+      setTrollMode(true);
       setMusicConfig((prev) => ({
         ...prev,
-        src: "/audio/theme_song_wd_invitation.mp3",
+        src: "/audio/troll_music.mp3",
       }));
     }
+
+    return () => {
+      if (trollImageTimerRef.current !== null) {
+        window.clearTimeout(trollImageTimerRef.current);
+      }
+    };
   }, []);
+
+  const handleTrollMusicEnded = () => {
+    if (!trollMode || showTrollImage) return;
+
+    setShowTrollImage(true);
+    trollImageTimerRef.current = window.setTimeout(() => {
+      setMusicConfig(weddingConfig.music);
+      setInvitationOpened(true);
+      setShowTrollImage(false);
+      trollImageTimerRef.current = null;
+    }, 3000);
+  };
 
   return (
     <ToastProvider>
@@ -51,6 +73,8 @@ export const WeddingPage: React.FC = () => {
             config={weddingConfig}
             guestName={guest.name}
             salutation={guest.salutation}
+            trollMode={trollMode}
+            showTrollImage={showTrollImage}
             onOpened={() => setInvitationOpened(true)}
           />
         )}
@@ -63,6 +87,9 @@ export const WeddingPage: React.FC = () => {
           artist={musicConfig.artist}
           autoPlay={musicConfig.autoPlay}
           visible={invitationOpened}
+          loop={!trollMode || invitationOpened}
+          visualizeBeats={trollMode && !invitationOpened}
+          onEnded={trollMode && !invitationOpened ? handleTrollMusicEnded : undefined}
         />
 
         {/* 01. HERO / SAVE THE DATE */}
@@ -99,8 +126,8 @@ export const WeddingPage: React.FC = () => {
         {/* 10. WEDDING GIFT & QR */}
         <GiftSection config={weddingConfig} />
 
-        {/* 11. JUST MARRIED CLOSING & PARENTS CARD */}
-        <JustMarriedSection config={weddingConfig} />
+        {/* 11. JUST MARRIED CLOSING */}
+        <JustMarriedSection />
       </DesktopContainer>
     </ToastProvider>
   );

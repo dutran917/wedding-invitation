@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description: "Save the Date — 28.11.2026 | Thiên Trang Palace Cẩm Phả, Quảng Ninh",
     images: [
       {
-        url: "/image/wedding/T_T00859.JPG",
+        url: "/image/wedding/optimized/IMG_5943.webp",
         width: 1200,
         height: 630,
         alt: "Quốc Du & Phương Ly Wedding",

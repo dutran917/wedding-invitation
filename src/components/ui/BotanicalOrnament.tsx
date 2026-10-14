@@ -92,3 +92,64 @@ export const SubtleFloralWatermark: React.FC<{ className?: string }> = ({
     </div>
   );
 };
+
+export const WeddingCornerLineArt: React.FC<{
+  className?: string;
+  tone?: "gold" | "light";
+}> = ({ className = "", tone = "gold" }) => (
+  <div
+    aria-hidden="true"
+    style={{
+      WebkitMaskImage:
+        "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
+      maskImage:
+        "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
+    }}
+    className={`pointer-events-none absolute inset-0 z-0 overflow-hidden select-none ${className}`}
+  >
+    <img
+      src="/image/wedding/optimized/luxury-chrysanthemum.webp"
+      alt=""
+      width="900"
+      height="963"
+      loading="lazy"
+      decoding="async"
+      className={`absolute -right-12 top-5 h-[280px] w-auto object-contain ${
+        tone === "light" ? "opacity-[0.17] brightness-125" : "opacity-[0.13]"
+      }`}
+    />
+    <img
+      src="/image/wedding/optimized/luxury-chrysanthemum.webp"
+      alt=""
+      width="900"
+      height="963"
+      loading="lazy"
+      decoding="async"
+      className={`absolute bottom-5 -left-12 h-[255px] w-auto -scale-x-100 object-contain ${
+        tone === "light" ? "opacity-[0.14] brightness-125" : "opacity-[0.1]"
+      }`}
+    />
+  </div>
+);
+
+export const DoveBotanicalDivider: React.FC<{ className?: string }> = ({
+  className = "",
+}) => {
+  return (
+    <div aria-hidden="true" className={`relative mx-auto h-28 w-full max-w-[390px] text-gold-700 ${className}`}>
+      <svg viewBox="0 0 390 112" fill="none" className="h-full w-full opacity-35">
+        <path d="M18 88C64 75 100 77 145 91C164 97 180 98 195 94" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+        <path d="M372 88C326 75 290 77 245 91C226 97 210 98 195 94" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+        <path d="M31 84C46 63 60 54 80 48C72 63 59 74 40 82" stroke="currentColor" strokeWidth="1" />
+        <path d="M55 76C62 55 76 41 96 32C91 53 78 68 60 77" stroke="currentColor" strokeWidth="1" />
+        <path d="M359 84C344 63 330 54 310 48C318 63 331 74 350 82" stroke="currentColor" strokeWidth="1" />
+        <path d="M335 76C328 55 314 41 294 32C299 53 312 68 330 77" stroke="currentColor" strokeWidth="1" />
+
+        <path d="M112 52C127 34 145 28 163 35C150 38 141 44 136 54C149 48 161 49 174 56C156 62 139 61 125 55C119 57 115 56 112 52Z" stroke="currentColor" strokeWidth="1.15" strokeLinejoin="round" />
+        <path d="M278 52C263 34 245 28 227 35C240 38 249 44 254 54C241 48 229 49 216 56C234 62 251 61 265 55C271 57 275 56 278 52Z" stroke="currentColor" strokeWidth="1.15" strokeLinejoin="round" />
+        <path d="M195 62C188 54 176 58 178 68C180 77 195 84 195 84C195 84 210 77 212 68C214 58 202 54 195 62Z" stroke="currentColor" strokeWidth="1.15" />
+        <circle cx="195" cy="94" r="2" fill="currentColor" />
+      </svg>
+    </div>
+  );
+};

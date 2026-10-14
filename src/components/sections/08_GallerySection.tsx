@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
 import { LightboxModal } from "@/components/ui/LightboxModal";
 import { Maximize2, Heart } from "lucide-react";
+import { WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 
 interface GallerySectionProps {
   config: WeddingConfig;
@@ -30,9 +31,11 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ config }) => {
   };
 
   return (
-    <section className="relative w-full py-12 px-4 bg-[#FAF7F2] text-espresso-400">
+    <section className="paper-texture relative w-full px-4 pb-12 pt-8 bg-[#FAF7F2] text-espresso-400 overflow-hidden">
+      <WeddingCornerLineArt className="opacity-70" />
+
       {/* Title */}
-      <div className="text-center mb-8">
+      <div className="relative z-10 text-center mb-8">
         <span className="font-sans text-[10px] tracking-ultra text-gold-600 uppercase font-semibold">
           ALBUM KỶ NIỆM
         </span>
@@ -46,7 +49,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ config }) => {
         </div>
       </div>
 
-      <div className="max-w-[420px] mx-auto space-y-6">
+      <div className="relative z-10 max-w-[420px] mx-auto space-y-6">
         {/* Photo 1: Large Editorial Frame */}
         {gallery[0] && (
           <motion.div
@@ -122,7 +125,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ config }) => {
           </div>
         )}
 
-        {/* Photo 4: Full-width Cinematic Landscape */}
+        {/* Photo 4: Full-width portrait frame */}
         {gallery[3] && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -132,7 +135,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ config }) => {
             onClick={() => openLightbox(3)}
             className="group cursor-pointer bg-white p-1.5 shadow-paper border border-gold-300/40 rounded-xs"
           >
-            <div className="relative w-full aspect-[16/10] overflow-hidden bg-cream-100">
+            <div className="relative w-full aspect-[4/5] overflow-hidden bg-cream-100">
               <Image
                 src={gallery[3].src}
                 alt={gallery[3].alt}

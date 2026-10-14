@@ -16,10 +16,10 @@ export const StorySection: React.FC<StorySectionProps> = ({ config }) => {
 
   // Real photos mapped to each milestone
   const milestonePhotos = [
-    "/image/wedding/T_T00018.JPG",
-    "/image/wedding/T_T00780.JPG",
-    "/image/wedding/T_T00817.JPG",
-    "/image/wedding/T_T01187.JPG",
+    "/image/wedding/optimized/IMG_5905.webp",
+    "/image/wedding/optimized/IMG_5923.webp",
+    "/image/wedding/optimized/IMG_5928.webp",
+    "/image/wedding/optimized/IMG_5985.webp",
   ];
 
   return (
@@ -45,7 +45,7 @@ export const StorySection: React.FC<StorySectionProps> = ({ config }) => {
 
         {story.timeline.map((item, idx) => {
           const isEven = idx % 2 === 0;
-          const photoSrc = milestonePhotos[idx] || "/image/wedding/T_T00018.JPG";
+          const photoSrc = milestonePhotos[idx] || "/image/wedding/optimized/IMG_5905.webp";
 
           return (
             <motion.div

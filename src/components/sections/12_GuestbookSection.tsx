@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, MessageCircleHeart } from "lucide-react";
 import { getSavedWishes, GuestWish, WISH_ADDED_EVENT } from "@/lib/guestbook";
+import { WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 
 export const GuestbookSection: React.FC = () => {
   const [wishes, setWishes] = useState<GuestWish[]>([]);
@@ -21,7 +22,8 @@ export const GuestbookSection: React.FC = () => {
   return (
     <section className="relative overflow-hidden bg-[#26201B] px-5 py-14 text-ivory-50 sm:px-8">
       <div className="absolute inset-0 opacity-[0.06] paper-texture" />
-      <div className="relative mx-auto max-w-sm">
+      <WeddingCornerLineArt tone="light" className="opacity-60" />
+      <div className="relative z-10 mx-auto max-w-sm">
         <div className="text-center">
           <MessageCircleHeart className="mx-auto h-6 w-6 text-gold-300" />
           <p className="mt-3 font-sans text-[11px] font-medium uppercase tracking-[0.32em] text-gold-300">

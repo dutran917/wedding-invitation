@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { WeddingConfig } from "@/types/wedding";
 import { MapPin, Navigation, Calendar, Clock } from "lucide-react";
 import { downloadWeddingCalendar } from "@/lib/calendar";
+import { WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 
 interface VenueSectionProps {
   config: WeddingConfig;
@@ -15,8 +16,9 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
   const { venue, weddingDate, weddingTime } = config;
 
   return (
-    <section className="relative w-full py-12 px-4 sm:px-6 bg-[#F4EFE6] text-espresso-400">
-      <div className="text-center mb-8 max-w-[380px] mx-auto">
+    <section className="paper-texture relative w-full py-12 px-4 sm:px-6 bg-[#F4EFE6] text-espresso-400 overflow-hidden">
+      <WeddingCornerLineArt />
+      <div className="relative z-10 text-center mb-8 max-w-[380px] mx-auto">
         <span className="font-sans text-[10px] tracking-ultra text-gold-600 uppercase font-semibold">
           ĐỊA ĐIỂM TỔ CHỨC
         </span>
@@ -30,12 +32,12 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ config }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.8 }}
-        className="max-w-[380px] mx-auto bg-white/95 border border-gold-400/40 p-4 sm:p-5 shadow-paper rounded-xs text-center"
+        className="relative z-10 max-w-[380px] mx-auto bg-white/95 border border-gold-400/40 p-4 sm:p-5 shadow-paper rounded-xs text-center"
       >
         {/* Venue Photo Frame */}
-        <div className="relative w-full aspect-[16/10] rounded-xs overflow-hidden mb-4 shadow-sm group">
+        <div className="relative w-full aspect-[4/5] rounded-xs overflow-hidden mb-4 shadow-sm group">
           <Image
-            src="/image/wedding/T_T00446.JPG"
+            src="/image/wedding/optimized/IMG_5900.webp"
             alt={venue.name}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-700"

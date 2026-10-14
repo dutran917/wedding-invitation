@@ -18,7 +18,7 @@ export const LoveLetterSection: React.FC<LoveLetterSectionProps> = ({ config }) 
       {/* Background with blurred ambient couple photo */}
       <div className="absolute inset-0 opacity-25">
         <Image
-          src={loveQuote.backgroundImage || "/image/wedding/T_T00859.JPG"}
+          src={loveQuote.backgroundImage || "/image/wedding/optimized/IMG_5938.webp"}
           alt="Love letter backdrop"
           fill
           className="object-cover"
