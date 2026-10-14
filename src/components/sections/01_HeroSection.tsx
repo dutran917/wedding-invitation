@@ -90,13 +90,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
     : "28 . 11 . 2026";
 
   return (
-    <section className="relative w-full h-[100svh] min-h-[660px] max-h-[960px] overflow-hidden flex flex-col items-center justify-between text-center select-none">
+    <section className="relative w-full h-[100svh] min-h-[660px] max-h-[960px] overflow-hidden flex flex-col items-center justify-between bg-black text-center select-none">
       {/* Background Image with subtle cinematic slow zoom */}
       <motion.div
         initial={{ scale: 1.15, opacity: 0.85 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 3, ease: "easeOut" }}
-        className="absolute inset-x-0 top-[-8%] h-[108%] w-full sm:inset-0 sm:h-full"
+        className="absolute inset-x-0 top-[-26%] h-[112%] w-full sm:inset-0 sm:h-full"
       >
         <Image
           src="/image/wedding/optimized/IMG_1908.webp"
