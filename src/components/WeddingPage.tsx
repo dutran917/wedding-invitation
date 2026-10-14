@@ -89,6 +89,7 @@ export const WeddingPage: React.FC = () => {
           visible={invitationOpened}
           loop={!trollMode || invitationOpened}
           visualizeBeats={trollMode && !invitationOpened}
+          maxPlayDurationSeconds={trollMode && !invitationOpened ? 6 : undefined}
           onEnded={trollMode && !invitationOpened ? handleTrollMusicEnded : undefined}
         />
 

@@ -11,6 +11,7 @@ interface MusicPlayerProps {
   visible?: boolean;
   loop?: boolean;
   visualizeBeats?: boolean;
+  maxPlayDurationSeconds?: number;
   onEnded?: () => void;
 }
 
@@ -22,6 +23,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   visible = true,
   loop = true,
   visualizeBeats = false,
+  maxPlayDurationSeconds,
   onEnded,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -30,6 +32,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const isUnlockedRef = useRef<boolean>(false);
   const invitationStartedRef = useRef<boolean>(false);
   const beatFrameRef = useRef<number | null>(null);
+  const durationCutoffHandledRef = useRef(false);
 
   const stopBeatDetection = () => {
     if (beatFrameRef.current !== null) {
@@ -110,6 +113,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    durationCutoffHandledRef.current = false;
     if (
       invitationStartedRef.current &&
       isUnlockedRef.current &&
@@ -122,6 +126,23 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
         .catch((err) => console.log("Play error on track change:", err));
     }
   }, [src]);
+
+  const handleTimeUpdate = () => {
+    const audio = audioRef.current;
+    if (
+      !audio ||
+      !maxPlayDurationSeconds ||
+      durationCutoffHandledRef.current ||
+      audio.currentTime < maxPlayDurationSeconds
+    ) {
+      return;
+    }
+
+    durationCutoffHandledRef.current = true;
+    audio.pause();
+    stopBeatDetection();
+    onEnded?.();
+  };
 
   const togglePlay = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -158,6 +179,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
         preload="metadata"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onTimeUpdate={handleTimeUpdate}
         onEnded={onEnded}
       />
 
