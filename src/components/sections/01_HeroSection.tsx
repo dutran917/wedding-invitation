@@ -90,13 +90,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
     : "28 . 11 . 2026";
 
   return (
-    <section className="relative w-full h-[100svh] min-h-[660px] max-h-[960px] overflow-hidden flex flex-col items-center justify-between bg-black text-center select-none">
+    <section className="relative w-full h-[100svh] min-h-[660px] max-h-[960px] overflow-hidden flex flex-col items-center justify-between text-center select-none">
       {/* Background Image with subtle cinematic slow zoom */}
       <motion.div
         initial={{ scale: 1.15, opacity: 0.85 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 3, ease: "easeOut" }}
-        className="absolute inset-x-0 top-[-26%] h-[112%] w-full sm:inset-0 sm:h-full"
+        className="absolute inset-x-0 top-[-8%] h-[108%] w-full sm:inset-0 sm:h-full"
       >
         <Image
           src="/image/wedding/optimized/IMG_1908.webp"
@@ -152,6 +152,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
           The Wedding of
         </motion.span>
 
+        {/* Date Display Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isRevealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.9, delay: 0.5 }}
+          className="mb-6 flex items-center justify-center gap-3 rounded-full border border-gold-400/40 bg-black/40 px-5 py-2 shadow-lg backdrop-blur-md"
+        >
+          <div className="h-[1px] w-6 bg-gold-400/70" />
+          <p className="font-serif text-base font-light tracking-widest text-ivory-100 drop-shadow-sm sm:text-lg">
+            {formattedDate}
+          </p>
+          <div className="h-[1px] w-6 bg-gold-400/70" />
+        </motion.div>
+
         <div className="relative flex w-full flex-col items-center">
           <motion.div
             aria-hidden="true"
@@ -186,19 +200,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
           <SpiralName text={bride.name} isRevealed={isRevealed} delay={1.14} />
         </div>
 
-        {/* Date Display Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isRevealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.9, delay: 2.05 }}
-          className="mt-6 flex items-center justify-center gap-3 bg-black/40 backdrop-blur-md px-5 py-2 rounded-full border border-gold-400/40 shadow-lg"
-        >
-          <div className="h-[1px] w-6 bg-gold-400/70" />
-          <p className="font-serif text-base sm:text-lg tracking-widest text-ivory-100 font-light drop-shadow-sm">
-            {formattedDate}
-          </p>
-          <div className="h-[1px] w-6 bg-gold-400/70" />
-        </motion.div>
       </div>
 
       {/* Scroll indicator */}
