@@ -96,7 +96,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ config, isRevealed = t
         initial={{ scale: 1.15, opacity: 0.85 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 3, ease: "easeOut" }}
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-x-0 top-[-8%] h-[108%] w-full sm:inset-0 sm:h-full"
       >
         <Image
           src="/image/wedding/optimized/IMG_1908.webp"

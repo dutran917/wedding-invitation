@@ -9,23 +9,34 @@ export const viewport: Viewport = {
   themeColor: "#FAF7F2",
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://quocdu-phuongly-wedding-invitation.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Quốc Du & Phương Ly — Wedding Invitation",
   description: "Trân trọng kính mời quý khách tới dự lễ thành hôn của Quốc Du & Phương Ly vào lúc 17:00 ngày 28.11.2026 tại Thiên Trang Palace Cẩm Phả, Quảng Ninh",
   openGraph: {
+    type: "website",
+    url: siteUrl,
     title: "Quốc Du & Phương Ly — Wedding Invitation",
     description: "Save the Date — 28.11.2026 | Thiên Trang Palace Cẩm Phả, Quảng Ninh",
     images: [
       {
-        url: "/image/wedding/optimized/IMG_5943.webp",
+        url: "/og-wedding.jpg",
         width: 1200,
         height: 630,
+        type: "image/jpeg",
         alt: "Quốc Du & Phương Ly Wedding",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Quốc Du & Phương Ly — Wedding Invitation",
+    description: "Save the Date — 28.11.2026 | Thiên Trang Palace Cẩm Phả, Quảng Ninh",
+    images: ["/og-wedding.jpg"],
   },
 };
 

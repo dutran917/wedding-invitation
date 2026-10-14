@@ -31,10 +31,34 @@ export const InvitationOpening: React.FC<InvitationOpeningProps> = ({
   const beatCountRef = useRef(0);
 
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootOverflow = root.style.overflow;
+    const previousRootOverscroll = root.style.overscrollBehavior;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyPosition = body.style.position;
+    const previousBodyInset = body.style.inset;
+    const previousBodyWidth = body.style.width;
+    const preventTouchScroll = (event: TouchEvent) => event.preventDefault();
+
+    window.scrollTo(0, 0);
+    root.style.overflow = "hidden";
+    root.style.overscrollBehavior = "none";
     document.body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.inset = "0";
+    body.style.width = "100%";
+    document.addEventListener("touchmove", preventTouchScroll, { passive: false });
+
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("touchmove", preventTouchScroll);
+      root.style.overflow = previousRootOverflow;
+      root.style.overscrollBehavior = previousRootOverscroll;
+      body.style.overflow = previousBodyOverflow;
+      body.style.position = previousBodyPosition;
+      body.style.inset = previousBodyInset;
+      body.style.width = previousBodyWidth;
+      window.requestAnimationFrame(() => window.scrollTo(0, 0));
       if (danceTimerRef.current !== null) {
         window.clearTimeout(danceTimerRef.current);
       }

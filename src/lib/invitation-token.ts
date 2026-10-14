@@ -5,29 +5,48 @@ export interface InvitationData {
 }
 
 const XOR_KEY = 0xa5;
+const COMPACT_TOKEN_VERSION = 2;
+const SALUTATIONS = ["Bạn", "Anh", "Chị", "Em", "Cô", "Chú", "Bác", "Ông bà", "Gia đình"];
 
-/**
- * Encodes invitation guest data, salutation, and troll mode into an obfuscated URL-safe token.
- */
-export function encodeInvitationToken(data: InvitationData): string {
-  const payload = JSON.stringify({
-    g: data.guest || "",
-    s: data.salutation || "",
-    t: data.troll ? 1 : 0,
-  });
-
-  const utf8Bytes = new TextEncoder().encode(payload);
-  const obfuscatedBytes = utf8Bytes.map((b) => b ^ XOR_KEY);
-
+function toBase64Url(bytes: Uint8Array): string {
   let binary = "";
-  for (let i = 0; i < obfuscatedBytes.length; i++) {
-    binary += String.fromCharCode(obfuscatedBytes[i]);
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
   }
 
   return btoa(binary)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+}
+
+function fromBase64Url(token: string): Uint8Array {
+  let base64 = token.replace(/-/g, "+").replace(/_/g, "/");
+  while (base64.length % 4) base64 += "=";
+
+  const binary = atob(base64);
+  return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+}
+
+/**
+ * Encodes invitation guest data, salutation, and troll mode into an obfuscated URL-safe token.
+ */
+export function encodeInvitationToken(data: InvitationData): string {
+  const salutation = data.salutation.trim();
+  const salutationIndex = SALUTATIONS.indexOf(salutation);
+  const customSalutation = salutationIndex === -1;
+  const text = customSalutation
+    ? `${salutation}\0${data.guest.trim()}`
+    : data.guest.trim();
+  const textBytes = new TextEncoder().encode(text);
+  const bytes = new Uint8Array(3 + textBytes.length);
+
+  bytes[0] = COMPACT_TOKEN_VERSION;
+  bytes[1] = (data.troll ? 1 : 0) | (customSalutation ? 2 : 0);
+  bytes[2] = customSalutation ? 0 : salutationIndex + 1;
+  bytes.set(textBytes, 3);
+
+  return toBase64Url(bytes.map((byte) => byte ^ XOR_KEY));
 }
 
 /**
@@ -37,15 +56,30 @@ export function decodeInvitationToken(token: string): InvitationData | null {
   if (!token) return null;
 
   try {
-    let base64 = token.replace(/-/g, "+").replace(/_/g, "/");
-    while (base64.length % 4) {
-      base64 += "=";
+    const bytes = fromBase64Url(token).map((byte) => byte ^ XOR_KEY);
+
+    if (bytes[0] === COMPACT_TOKEN_VERSION && bytes.length >= 3) {
+      const flags = bytes[1];
+      const salutationCode = bytes[2];
+      const decodedText = new TextDecoder().decode(bytes.slice(3));
+      const separatorIndex = decodedText.indexOf("\0");
+      const hasCustomSalutation = (flags & 2) === 2;
+
+      return {
+        guest: (hasCustomSalutation && separatorIndex >= 0
+          ? decodedText.slice(separatorIndex + 1)
+          : decodedText
+        ).trim(),
+        salutation: (hasCustomSalutation
+          ? separatorIndex >= 0
+            ? decodedText.slice(0, separatorIndex)
+            : ""
+          : SALUTATIONS[salutationCode - 1] || ""
+        ).trim(),
+        troll: (flags & 1) === 1,
+      };
     }
-    const binary = atob(base64);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) {
-      bytes[i] = binary.charCodeAt(i) ^ XOR_KEY;
-    }
+
     const jsonStr = new TextDecoder().decode(bytes);
     const parsed = JSON.parse(jsonStr);
     return {
@@ -56,15 +90,7 @@ export function decodeInvitationToken(token: string): InvitationData | null {
   } catch {
     // Fallback attempt: unmasked base64
     try {
-      let base64 = token.replace(/-/g, "+").replace(/_/g, "/");
-      while (base64.length % 4) {
-        base64 += "=";
-      }
-      const binary = atob(base64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) {
-        bytes[i] = binary.charCodeAt(i);
-      }
+      const bytes = fromBase64Url(token);
       const jsonStr = new TextDecoder().decode(bytes);
       const parsed = JSON.parse(jsonStr);
       return {
