@@ -33,7 +33,7 @@ export const weddingConfig: WeddingConfig = {
   venue: {
     name: "THIÊN TRANG PALACE",
     subVenue: "Trung Tâm Tiệc Cưới & Sự Kiện Cao Cấp",
-    address: "Thiên Trang Palace, TP. Cẩm Phả, Tỉnh Quảng Ninh",
+    address: "Thiên Trang Palace, phường Cẩm Phả, TP. Quảng Ninh",
     mapsUrl: "https://maps.google.com/?q=Thiên+Trang+Palace+Cẩm+Phả+Quảng+Ninh",
     embedMapsUrl: "https://maps.google.com/maps?q=Thiên+Trang+Palace+Cẩm+Phả+Quảng+Ninh&t=&z=15&ie=UTF8&iwloc=&output=embed",
   },

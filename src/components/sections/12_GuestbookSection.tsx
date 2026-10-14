@@ -3,14 +3,28 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, MessageCircleHeart } from "lucide-react";
-import { getSavedWishes, GuestWish, WISH_ADDED_EVENT } from "@/lib/guestbook";
+import { GuestWish, WISH_ADDED_EVENT } from "@/lib/guestbook";
 import { WeddingCornerLineArt } from "@/components/ui/BotanicalOrnament";
 
 export const GuestbookSection: React.FC = () => {
   const [wishes, setWishes] = useState<GuestWish[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setWishes(getSavedWishes());
+    const loadWishes = async () => {
+      try {
+        const response = await fetch("/api/wishes", { cache: "no-store" });
+        if (!response.ok) throw new Error("Không thể tải lời chúc");
+        const payload = (await response.json()) as { wishes?: GuestWish[] };
+        setWishes(payload.wishes || []);
+      } catch {
+        setWishes([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadWishes();
     const handleWishAdded = (event: Event) => {
       const wish = (event as CustomEvent<GuestWish>).detail;
       setWishes((current) => [wish, ...current.filter((item) => item.id !== wish.id)].slice(0, 6));
@@ -36,7 +50,11 @@ export const GuestbookSection: React.FC = () => {
         </div>
 
         <div className="mt-8 space-y-3">
-          {wishes.length ? (
+          {isLoading ? (
+            <div className="border border-dashed border-gold-300/25 px-5 py-8 text-center">
+              <p className="font-serif text-base italic text-ivory-200/75">Đang tải lời chúc...</p>
+            </div>
+          ) : wishes.length ? (
             wishes.map((wish, index) => (
               <motion.article
                 key={wish.id}

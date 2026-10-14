@@ -16,12 +16,12 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Quốc Du & Phương Ly — Wedding Invitation",
-  description: "Trân trọng kính mời quý khách tới dự lễ thành hôn của Quốc Du & Phương Ly vào lúc 17:00 ngày 28.11.2026 tại Thiên Trang Palace Cẩm Phả, Quảng Ninh",
+  description: "Trân trọng kính mời quý khách tới dự lễ thành hôn của Quốc Du & Phương Ly vào lúc 17:00 ngày 28.11.2026 tại Thiên Trang Palace, phường Cẩm Phả, TP. Quảng Ninh",
   openGraph: {
     type: "website",
     url: siteUrl,
     title: "Quốc Du & Phương Ly — Wedding Invitation",
-    description: "Save the Date — 28.11.2026 | Thiên Trang Palace Cẩm Phả, Quảng Ninh",
+    description: "Save the Date — 28.11.2026 | Thiên Trang Palace, phường Cẩm Phả, TP. Quảng Ninh",
     images: [
       {
         url: "/og-wedding.jpg",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Quốc Du & Phương Ly — Wedding Invitation",
-    description: "Save the Date — 28.11.2026 | Thiên Trang Palace Cẩm Phả, Quảng Ninh",
+    description: "Save the Date — 28.11.2026 | Thiên Trang Palace, phường Cẩm Phả, TP. Quảng Ninh",
     images: ["/og-wedding.jpg"],
   },
 };
